@@ -7,14 +7,12 @@ import { addProjectSchema } from "./schema";
 import { z } from "zod";
 import ControllerSelect from "@/components/ControllerSelect";
 import { useProjects, User } from "@/contexts/ProjectsContext";
-import { useRouter } from "next/navigation";
 import { statusOptions, userOptions } from "@/lib/mocks";
-import { isMobile } from "@/lib/utils";
+import { isMobile, navigate } from "@/lib/utils";
 
 export type AddProjectSchemaType = z.infer<typeof addProjectSchema> | FieldValues;
 
 const AddPage = () => {
-  const router = useRouter();
   const isDesktop = !isMobile();
 
   const {
@@ -60,8 +58,7 @@ const AddPage = () => {
       assignedTo: userOptions[Number(assignedTo)],
       status: statusOptions[Number(status)].label,
     })
-
-    router.push("/");
+    navigate('/')
   }
 
   return (

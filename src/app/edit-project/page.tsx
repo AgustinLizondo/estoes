@@ -7,9 +7,8 @@ import { z } from "zod";
 import ControllerSelect from "@/components/ControllerSelect";
 import { useProjects, User } from "@/contexts/ProjectsContext";
 import { addProjectSchema } from "../add-project/schema";
-import { useRouter } from "next/navigation";
 import { statusOptions, userOptions } from "@/lib/mocks";
-import { isMobile } from "@/lib/utils";
+import { isMobile, navigate } from "@/lib/utils";
 
 export type AddProjectSchemaType = z.infer<typeof addProjectSchema> | FieldValues;
 
@@ -28,7 +27,6 @@ const EditPage = () => {
   const projectManager = userOptions.findIndex(user => user.name === projectManagerFromSelected.name).toString();
   const assignedTo = userOptions.findIndex(user => user.name === assignedToFromSelected.name).toString();
   const status = statusOptions.filter(status => status.label === statusFromSelected)[0].value;
-  const router = useRouter();
 
   const {
     control,
@@ -73,8 +71,7 @@ const EditPage = () => {
       assignedTo: userOptions[parseInt(assignedTo)],
       status: statusOptions.filter(statusOption => statusOption.value === status)[0].label,
     })
-
-    router.push("/");
+    navigate('/');
   }
 
   return (

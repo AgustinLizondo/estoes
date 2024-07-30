@@ -13,15 +13,13 @@ import {
 import { FiEdit, FiMoreVertical, FiTrash } from "react-icons/fi";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogOverlay, DialogPortal, DialogTitle } from "@/components/ui/dialog";
 import DropdownMenu from "@/components/DropdownMenu";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { isMobile } from "@/lib/utils";
+import { isMobile, navigate } from "@/lib/utils";
 
 export default function Home() {
   const { projects } = useProjects();
   const isDesktop = !isMobile();
   const { setSelectedProject, deleteProject } = useProjects();
-  const router = useRouter();
   const deleteProjectFunc = (id: number) => {
     deleteProject(id);
   }
@@ -127,7 +125,7 @@ export default function Home() {
                 <TableCell>
                   <Dialog>
                     <DropdownMenu
-                      className="flex flex-col mr-2 -mt-4"
+                      className="flex flex-col mr-2"
                       trigger={
                         <button
                           type="button"
@@ -142,7 +140,7 @@ export default function Home() {
                           icon: <FiEdit size={16} color="#262626" />,
                           onClick: () => {
                             setSelectedProject(project.id);
-                            router.push("edit-project")
+                            navigate('/edit-project')
                           },
                         },
                         {

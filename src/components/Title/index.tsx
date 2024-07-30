@@ -1,11 +1,10 @@
 "use client"
 
-import { cn, formatPath } from "@/lib/utils";
-import { usePathname, useRouter } from "next/navigation"
+import { cn, formatPath, navigate } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 import { FiArrowLeft, FiPlus } from "react-icons/fi";
 
 const Title = () => {
-  const router = useRouter();
   const currentPath = usePathname();
 
   return (
@@ -18,7 +17,11 @@ const Title = () => {
       {currentPath !== "/" && (
         <button
           type="button"
-          onClick={() => router.back()}
+          onClick={() => {
+            if (typeof window !== 'undefined') {
+              window.history.back()
+            }
+          }}
           className="flex flex-row gap-2 items-center"
         >
           <FiArrowLeft size={24} color="#6d6c6c" />
@@ -38,7 +41,9 @@ const Title = () => {
         currentPath === "/" && (
           <button
             className="flex flex-row gap-2 items-center rounded-md bg-primary p-2"
-            onClick={() => router.push("/add-project")}
+            onClick={() => {
+              navigate('/add-project')
+            }}
           >
             <FiPlus
               size={16}

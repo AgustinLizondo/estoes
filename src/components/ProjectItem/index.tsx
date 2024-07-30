@@ -3,10 +3,10 @@ import { ProjectItemProps } from "./types";
 import Image from "next/image";
 import { FiEdit, FiMoreVertical, FiTrash } from "react-icons/fi";
 import DropdownMenu from "../DropdownMenu";
-import { useRouter } from "next/navigation";
 import { useProjects } from "@/contexts/ProjectsContext";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogTitle } from "../ui/dialog";
 import { DialogOverlay, DialogPortal } from "@radix-ui/react-dialog";
+import { navigate } from "@/lib/utils";
 
 const ProjectItem = (props: ProjectItemProps) => {
   const {
@@ -17,7 +17,6 @@ const ProjectItem = (props: ProjectItemProps) => {
     status,
   } = props;
 
-  const router = useRouter();
   const { setSelectedProject, deleteProject } = useProjects();
   const disabled = status === "Disabled";
 
@@ -83,7 +82,7 @@ const ProjectItem = (props: ProjectItemProps) => {
               icon: <FiEdit size={16} color="#262626" />,
               onClick: () => {
                 setSelectedProject(id);
-                router.push("edit-project")
+                navigate('/edit-project')
               },
             },
             {
