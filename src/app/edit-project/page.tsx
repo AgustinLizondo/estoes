@@ -8,24 +8,10 @@ import ControllerSelect from "@/components/ControllerSelect";
 import { useProjects, User } from "@/contexts/ProjectsContext";
 import { addProjectSchema } from "../add-project/schema";
 import { useRouter } from "next/navigation";
+import { statusOptions, userOptions } from "@/lib/mocks";
+import { isMobile } from "@/lib/utils";
 
 export type AddProjectSchemaType = z.infer<typeof addProjectSchema> | FieldValues;
-
-export const userOptions = [
-  {
-    image: "https://s3-alpha-sig.figma.com/img/e137/354e/7d843148df25b98c9ca118eea3006203?Expires=1723420800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=B0DSi5N002cBmkT60-3H1Ls8anK0t424fmimNwNRXW8cwsmlMufPhnftzH3jMrFPv6NA27cPXUGXyPscS0eeTAMJrN5cFGkUG~VErMH7rZe3TbUOadRpgyY7Y0LHPnNdjnB61DtQBI524ok25ScLNJHh2sggOZ5wtQMZOAzU70Jip1-IRDLZBoRt2ZtbDWhd39hZRdKVWYZD~neQAXYg0cBOhBXM68unQti4iTifA8bXE38618WOnP75Bh6VaFgIjsOK~pJEASXsuEzRwtahuXGfB3GkiMAZBlvJBqIpCpFJwiHojzAARFMmQvcVYtjUCaU~aVrX9QEHDioeWrT0ag__",
-    name: "Ignacio Truffa",
-  },
-  {
-    image: "https://s3-alpha-sig.figma.com/img/e137/354e/7d843148df25b98c9ca118eea3006203?Expires=1723420800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=B0DSi5N002cBmkT60-3H1Ls8anK0t424fmimNwNRXW8cwsmlMufPhnftzH3jMrFPv6NA27cPXUGXyPscS0eeTAMJrN5cFGkUG~VErMH7rZe3TbUOadRpgyY7Y0LHPnNdjnB61DtQBI524ok25ScLNJHh2sggOZ5wtQMZOAzU70Jip1-IRDLZBoRt2ZtbDWhd39hZRdKVWYZD~neQAXYg0cBOhBXM68unQti4iTifA8bXE38618WOnP75Bh6VaFgIjsOK~pJEASXsuEzRwtahuXGfB3GkiMAZBlvJBqIpCpFJwiHojzAARFMmQvcVYtjUCaU~aVrX9QEHDioeWrT0ag__",
-    name: "Pedro Truffa",
-  }
-];
-
-export const statusOptions = [
-  { value: '1', label: 'Enabled' },
-  { value: '2', label: 'Disabled' },
-];
 
 const EditPage = () => {
   const { projects, selectedProject } = useProjects();
@@ -38,7 +24,7 @@ const EditPage = () => {
     status: statusFromSelected,
   } = projects.filter(project => project.id === selectedProject)[0];
 
-  const isDesktop = window.innerWidth > 1024;
+  const isDesktop = !isMobile();
   const projectManager = userOptions.findIndex(user => user.name === projectManagerFromSelected.name).toString();
   const assignedTo = userOptions.findIndex(user => user.name === assignedToFromSelected.name).toString();
   const status = statusOptions.filter(status => status.label === statusFromSelected)[0].value;

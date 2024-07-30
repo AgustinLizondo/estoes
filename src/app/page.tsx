@@ -15,10 +15,11 @@ import { Dialog, DialogClose, DialogContent, DialogFooter, DialogOverlay, Dialog
 import DropdownMenu from "@/components/DropdownMenu";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { isMobile } from "@/lib/utils";
 
 export default function Home() {
   const { projects } = useProjects();
-  const isDesktop = window.innerWidth > 1024;
+  const isDesktop = !isMobile();
   const { setSelectedProject, deleteProject } = useProjects();
   const router = useRouter();
   const deleteProjectFunc = (id: number) => {

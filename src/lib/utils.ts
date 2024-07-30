@@ -13,3 +13,8 @@ export const formatPath = (path: string) => {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
     .join(' ');          // Join words back into a single string
 };
+
+export const isMobile = () => {
+  const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+  return regex.test(navigator.userAgent);
+}
